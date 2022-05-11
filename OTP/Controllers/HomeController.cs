@@ -30,15 +30,15 @@ namespace OTP.Controllers
         [Authorize]
         public async Task<IActionResult> OTPGenerator()
         {
-            
+
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
-                        
+
             ApplicationUser applicationUser = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == claim.Value);
 
-            OTPVM otpVM = new OTPVM { 
-            ApplicationUser = applicationUser, 
-            OTPDateTime = DateTime.Now
+            OTPVM otpVM = new OTPVM {
+                ApplicationUser = applicationUser,
+                OTPDateTime = DateTime.Now
             };
             //var userEmail = _userManager.GetUserName(User);
             //var user = await _db.Users.FindAsync(userEmail);
@@ -54,11 +54,11 @@ namespace OTP.Controllers
 
             //ApplicationUser applicationUser = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == claim.Value);
             OTPHistory oTPHistory = new OTPHistory {
-            UserGuidId = otpVM.ApplicationUser.Id,
-            UserId = otpVM.ApplicationUser.Id,
-            OTP = GenerateUserId(),
-            TimeStamp = otpVM.OTPDateTime,
-            Status = 1
+                UserGuidId = otpVM.ApplicationUser.Id,
+                UserId = otpVM.ApplicationUser.Id,
+                OTP = GenerateOTPPassword(),
+                TimeStamp = otpVM.OTPDateTime,
+                Status = 1
             };
 
             _unitOfWork.OTPHistory.Add(oTPHistory);
@@ -76,23 +76,35 @@ namespace OTP.Controllers
             return View(oTPHistory);
         }
 
-       
-        private string GenerateUserId()
+
+        private string GenerateOTPPassword()
         {
-            Random rnd = new Random();
+           // generate only numbers
+           Random rnd = new Random();
             return rnd.Next(100000, 999999).ToString();
+            //return RandomString(6);
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
+        // generate alphanumerical
+    //    public static string RandomString(int length)
+    //    { 
+    //         Random random = new Random();
+    //        const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    //        return new string(Enumerable.Repeat(chars, length)
+    //            .Select(s => s[random.Next(s.Length)]).ToArray());
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+    //}
+
+        //public IActionResult Privacy()
+        //{
+        //    return View();
+        //}
+
+        //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        //public IActionResult Error()
+        //{
+        //    return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        //}
 
 
         //API CALLS
