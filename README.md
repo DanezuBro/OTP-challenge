@@ -1,0 +1,3 @@
+# OTP-challenge
+It's a .NET Core MVC 6 webb app that can generate a one-time password. The inputs are the following two fields: User Id and DateTime. Every generated password should be valid for up to 30 seconds. The generated password and the remaining time until the password becomes invalid must be displayed on a Web page. I tried to cover as many technical details as possible, so the application uses EntityFramework (code first approach & migrations), Dependency Injection, Authentication & Authorization, API calls, concepts related to Repository and UnitOfWork,Model, ViewModel, DataAnnotations for client side and server side validations, and Javascript, Bootstrap v5.1.0 for client side UI.
+
