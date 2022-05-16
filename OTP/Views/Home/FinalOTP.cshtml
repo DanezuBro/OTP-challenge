@@ -46,6 +46,7 @@
 
     function ValidateOTP(otp)
          {
+
              var d = document.getElementById("rezultat");
              $.ajax({
                  "url": "/Home/ValidateOTP/?otp=" + otp,
@@ -74,6 +75,7 @@
 
         function CancelingOTP(otp)
         {
+
            $.ajax({
                  "url": "/Home/CancelingOTP/?otp=" + otp
                 });

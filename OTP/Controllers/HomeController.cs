@@ -47,6 +47,7 @@ namespace OTP.Controllers
 
         [Authorize]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> OTPGenerator(OTPVM otpVM)
         {
             //var claimsIdentity = (ClaimsIdentity)User.Identity;
@@ -79,21 +80,22 @@ namespace OTP.Controllers
 
         private string GenerateOTPPassword()
         {
-           // generate only numbers
+            //generate only numbers
+
            Random rnd = new Random();
             return rnd.Next(100000, 999999).ToString();
             //return RandomString(6);
         }
 
         // generate alphanumerical
-    //    public static string RandomString(int length)
-    //    { 
-    //         Random random = new Random();
-    //        const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    //        return new string(Enumerable.Repeat(chars, length)
-    //            .Select(s => s[random.Next(s.Length)]).ToArray());
+        //public static string RandomString(int length)
+        //{
+        //    Random random = new Random();
+        //    const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        //    return new string(Enumerable.Repeat(chars, length)
+        //        .Select(s => s[random.Next(s.Length)]).ToArray());
 
-    //}
+        //}
 
         //public IActionResult Privacy()
         //{
