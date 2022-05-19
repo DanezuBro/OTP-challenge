@@ -28,6 +28,7 @@ namespace OTP.Controllers
         }
 
         [Authorize]
+        //[Authorize(Roles = $"{WC.AdminRole},{WC.CustomerRole}")]
         public async Task<IActionResult> OTPGenerator()
         {
 
@@ -46,6 +47,7 @@ namespace OTP.Controllers
         }
 
         [Authorize]
+        //[Authorize(Roles = $"{WC.AdminRole},{WC.CustomerRole}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> OTPGenerator(OTPVM otpVM)
@@ -54,7 +56,7 @@ namespace OTP.Controllers
             //var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
             //ApplicationUser applicationUser = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == claim.Value);
-            OTPHistory oTPHistory = new OTPHistory {
+                OTPHistory oTPHistory = new OTPHistory {
                 UserGuidId = otpVM.ApplicationUser.Id,
                 UserId = otpVM.ApplicationUser.Id,
                 OTP = GenerateOTPPassword(),
@@ -86,16 +88,6 @@ namespace OTP.Controllers
             return rnd.Next(100000, 999999).ToString();
             //return RandomString(6);
         }
-
-        // generate alphanumerical
-        //public static string RandomString(int length)
-        //{
-        //    Random random = new Random();
-        //    const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        //    return new string(Enumerable.Repeat(chars, length)
-        //        .Select(s => s[random.Next(s.Length)]).ToArray());
-
-        //}
 
         //public IActionResult Privacy()
         //{
